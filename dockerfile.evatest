@@ -1,0 +1,26 @@
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu20.04
+
+
+# Prevent interactive prompts during apt installs
+ENV DEBIAN_FRONTEND=noninteractive TZ=UTC
+
+# Install Python 3.9 and build deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.9 python3.9-dev python3.9-venv python3-pip \
+    git wget curl build-essential cmake ninja-build \
+    ffmpeg libsm6 libxext6 libgl1 \
+    libavcodec-dev libavformat-dev libswscale-dev libavutil-dev \
+    tzdata \
+ && rm -rf /var/lib/apt/lists/*
+
+# Make python3 point to python3.9
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3 && \
+    python3 -m pip install --upgrade pip setuptools wheel
+
+# Install eva-decord (wheel available for Linux + Python 3.9)
+RUN pip install eva-decord==0.6.1
+
+# Verify import works
+RUN python3 -c "import decord; print('eva_decord imported OK, version:', getattr(decord, '__version__', 'unknown'))"
+
+CMD ["/bin/bash"]

@@ -15,7 +15,14 @@ import torch
 import torch.cuda.amp as amp
 import torch.distributed as dist
 import torchvision.transforms.functional as TF
-from decord import VideoReader
+try:
+    from eva_decord import VideoReader, cpu  
+except ImportError:
+    try:
+        from decord import VideoReader, cpu
+    except ImportError:
+        print("Warning: Neither eva_decord nor decord installed. Video processing will not work.")
+        VideoReader = None  
 from PIL import Image
 from safetensors import safe_open
 from torchvision import transforms
