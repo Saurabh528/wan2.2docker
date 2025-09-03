@@ -1,0 +1,86 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+README.md
+INSTALL.md
+LICENSE.txt
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Build artifacts
+Makefile
+pyproject.toml
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Model checkpoints (will be downloaded at runtime)
+Wan2.2-S2V-14B/
+*.bin
+*.safetensors
+
+# Output files
+output/
+*.mp4
+*.avi
+*.mov
+
+# Logs
+*.log
+logs/
+
+# Docker files (except the one we're using)
+Dockerfile
+docker-compose.yml
+
+# Old requirements
+requirements.txt
+
+# Assets (keep only essential ones)
+assets/
