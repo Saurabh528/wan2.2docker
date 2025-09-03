@@ -84,3 +84,6 @@ requirements.txt
 
 # Assets (keep only essential ones)
 assets/
+
+# Examples (not needed in production)
+examples/
