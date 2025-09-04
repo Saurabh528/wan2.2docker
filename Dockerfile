@@ -80,6 +80,9 @@ RUN python3 -c "import torch, torchvision, torchaudio; print('Torch OK:', torch.
 RUN python3 -c "import transformers; print('Transformers:', transformers.__version__)"
 RUN python3 -c "import einops, timm, hf_transfer; print('einops OK:', einops.__version__); print('timm OK:', timm.__version__); print('hf_transfer OK')"
 RUN python3 -c "import decord; print('eva_decord OK:', getattr(decord, '__version__', 'unknown'))"
+RUN python3 -c "import numpy; print('numpy OK:', numpy.__version__)"
+RUN python3 -c "import flash_attn; print('flash_attn OK:', flash_attn.__version__)"
+
 
 # --- Default command ---
 CMD ["python3", "-u", "rp_handler.py"]
