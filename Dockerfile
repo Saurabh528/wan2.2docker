@@ -45,6 +45,7 @@ RUN pip install --no-cache-dir \
     "numpy>=2.0" \
     runpod==1.7.13 \
     eva-decord==0.6.1 \
+    librosa \
     requests \
     einops \
     timm \
