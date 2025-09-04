@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 import wan
 from wan.configs import MAX_AREA_CONFIGS, SIZE_CONFIGS, WAN_CONFIGS
 from wan.utils.utils import merge_video_audio, save_video
-
+from huggingface_hub import snapshot_download
+local_dir_model = snapshot_download(repo_id="Wan-AI/Wan2.2-S2V-14B")
 # Configuration
 MODEL_NAME = "Wan-AI/Wan2.2-S2V-14B"
 MAX_VIDEO_SIZE_MB = 100  # Maximum video size in MB
@@ -65,7 +66,7 @@ def load_model():
         logger.info("Loading Wan S2V pipeline...")
         wan_s2v_model = wan.WanS2V(
             config=cfg,
-            checkpoint_dir=MODEL_NAME,  # Will download from HuggingFace
+            checkpoint_dir=local_dir_model,  # Will download from HuggingFace
             device_id=0,
             rank=0,
             t5_fsdp=False,
@@ -294,7 +295,8 @@ def handler(job: Dict[str, Any]) -> Dict[str, Any]:
             f.write(image_data)
         with open(audio_path, "wb") as f:
             f.write(audio_data)
-        
+        output_path = None  # make sure it exists in this scope
+
         try:
             # Generate video
             output_path = generate_video(

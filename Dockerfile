@@ -28,11 +28,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Make sure pip is up-to-date for this Python
 RUN python3 -m pip install --upgrade pip setuptools wheel
 
-# --- Core CUDA-matched PyTorch stack (cu121 wheels) ---
-# Keep torchvision aligned with torch (per official matrix)
-RUN pip install --no-cache-dir \
-    --index-url https://download.pytorch.org/whl/cu121 \
-    torch==2.5.0+cu121 torchvision==0.20.0+cu121 torchaudio==2.5.0+cu121
 
 # --- Install hf_transfer for fast downloads ---
 RUN pip install --no-cache-dir hf_transfer
@@ -49,6 +44,7 @@ RUN pip install --no-cache-dir \
     requests \
     einops \
     timm \
+    huggingface_hub \
     soundfile \
     opencv-python-headless \
     "diffusers>=0.31.0" \
@@ -65,7 +61,13 @@ RUN pip install --no-cache-dir \
 # There are no Linux cp310 wheels on PyPI, so we force a source build.
 
 # Optional: FlashAttention (skip gracefully if no matching wheel)
-RUN pip install --no-cache-dir flash-attn==2.8.3 || true
+
+# 2. Install stable Colab stack
+RUN pip install --no-cache-dir torch==2.2.2+cu121 --extra-index-url https://download.pytorch.org/whl/cu121
+RUN pip install --no-cache-dir flash-attn==2.5.6 
+RUN pip install --no-cache-dir numpy==1.26.4
+RUN pip install --no-cache-dir torchvision==0.17.2 --extra-index-url https://download.pytorch.org/whl/cu121
+
 
 # --- App code ---
 WORKDIR /app
